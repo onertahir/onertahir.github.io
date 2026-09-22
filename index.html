@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tahir Öner | TOCode — Bilgisayar Programcısı &amp; Bağımsız Geliştirici</title>
+<meta name="description" content="TOCode çatısı altında mobil uygulamalar ve web araçları geliştiren bağımsız yazılımcı Tahir Öner'in kişisel portfolyo sitesi." />
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          brand: {
+            50: '#eef2ff',
+            100: '#e0e7ff',
+            200: '#c7d2fe',
+            300: '#a5b4fc',
+            400: '#818cf8',
+            500: '#6366f1',
+            600: '#4f46e5',
+            700: '#4338ca',
+            800: '#3730a3',
+            900: '#312e81',
+          },
+        },
+        animation: {
+          'fade-up': 'fadeUp 0.7s ease-out forwards',
+          'blob': 'blob 12s infinite ease-in-out',
+        },
+        keyframes: {
+          fadeUp: {
+            '0%': { opacity: '0', transform: 'translateY(16px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+          },
+          blob: {
+            '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+            '33%': { transform: 'translate(30px, -40px) scale(1.1)' },
+            '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+          },
+        },
+      },
+    },
+  }
+</script>
+
+<!-- Google Fonts: Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  html { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+  body { background-color: #0b0f19; }
+
+  ::selection { background-color: #6366f1; color: #ffffff; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0b0f19; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+  .reveal { opacity: 0; }
+  .reveal.in-view { opacity: 1; }
+
+  .card-glow {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(129,140,248,0.35), rgba(129,140,248,0) 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .card-glow:hover::before { opacity: 1; }
+</style>
+</head>
+
+<body class="bg-[#0b0f19] text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-[#0b0f19]/80 backdrop-blur-md">
+    <nav class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="#home" class="flex items-center gap-2 group">
+          <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-900/40 group-hover:scale-105 transition-transform">TO</span>
+          <span class="font-semibold text-slate-100 tracking-tight">TOCode</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#home" class="text-slate-300 hover:text-white transition-colors">Anasayfa</a>
+          <a href="#projects" class="text-slate-300 hover:text-white transition-colors">Projeler</a>
+          <a href="#about" class="text-slate-300 hover:text-white transition-colors">Hakkımda</a>
+          <a href="#contact" class="text-slate-300 hover:text-white transition-colors">İletişim</a>
+          <a href="#contact" class="ml-2 inline-flex items-center rounded-full bg-brand-600 px-4 py-2 font-medium text-white shadow-lg shadow-brand-900/40 hover:bg-brand-500 hover:-translate-y-0.5 transition-all">
+            İletişime Geç
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" aria-label="Menüyü aç/kapat" aria-expanded="false" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="md:hidden hidden pb-5">
+        <div class="flex flex-col gap-1 pt-2 border-t border-white/5">
+          <a href="#home" class="mobile-link rounded-lg px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/5 transition-colors">Anasayfa</a>
+          <a href="#projects" class="mobile-link rounded-lg px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/5 transition-colors">Projeler</a>
+          <a href="#about" class="mobile-link rounded-lg px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/5 transition-colors">Hakkımda</a>
+          <a href="#contact" class="mobile-link rounded-lg px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/5 transition-colors">İletişim</a>
+          <a href="#contact" class="mobile-link mt-2 inline-flex items-center justify-center rounded-full bg-brand-600 px-4 py-2.5 font-medium text-white hover:bg-brand-500 transition-colors">
+            İletişime Geç
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section id="home" class="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32">
+    <!-- Decorative blobs -->
+    <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl animate-blob"></div>
+      <div class="absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl animate-blob" style="animation-delay:2s"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.06)_1px,transparent_0)] [background-size:28px_28px]"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 text-center">
+      <div class="reveal animate-fade-up inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-slate-300 mb-6">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        Yeni projelere açığım
+      </div>
+
+      <h1 class="reveal animate-fade-up [animation-delay:80ms] text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+        Bilgisayar Programcısı
+        <span class="block bg-gradient-to-r from-brand-300 via-brand-400 to-indigo-300 bg-clip-text text-transparent">
+          &amp; Bağımsız Geliştirici
+        </span>
+      </h1>
+
+      <p class="reveal animate-fade-up [animation-delay:160ms] mt-6 max-w-2xl mx-auto text-base sm:text-lg text-slate-400 leading-relaxed">
+        Merhaba, ben Tahir. <span class="text-slate-200 font-medium">TOCode</span> çatısı altında,
+        fikirden yayına kadar tüm süreci tek başıma yürüterek mobil uygulamalar ve
+        web araçları geliştiriyorum. Sade arayüzler, temiz kod ve gerçek problemlere
+        pratik çözümler önceliğim.
+      </p>
+
+      <div class="reveal animate-fade-up [animation-delay:240ms] mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#projects" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-900/40 hover:bg-brand-500 hover:-translate-y-0.5 active:translate-y-0 transition-all">
+          Projelerimi Gör
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+        <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 font-semibold text-slate-200 hover:bg-white/10 hover:-translate-y-0.5 active:translate-y-0 transition-all">
+          Benimle İletişime Geç
+        </a>
+      </div>
+
+      <!-- Mini stats -->
+      <div class="reveal animate-fade-up [animation-delay:320ms] mt-16 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto border-t border-white/5 pt-8">
+        <div>
+          <p class="text-2xl sm:text-3xl font-bold text-white">10+</p>
+          <p class="mt-1 text-xs sm:text-sm text-slate-500">Tamamlanan Proje</p>
+        </div>
+        <div>
+          <p class="text-2xl sm:text-3xl font-bold text-white">3+</p>
+          <p class="mt-1 text-xs sm:text-sm text-slate-500">Yıl Deneyim</p>
+        </div>
+        <div>
+          <p class="text-2xl sm:text-3xl font-bold text-white">%100</p>
+          <p class="mt-1 text-xs sm:text-sm text-slate-500">Bağımsız Üretim</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects" class="py-20 sm:py-28 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="reveal max-w-2xl mx-auto text-center mb-14">
+        <span class="text-sm font-semibold text-brand-400 tracking-wide uppercase">Projeler</span>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">Geliştirdiğim Çalışmalar</h2>
+        <p class="mt-4 text-slate-400">
+          TOCode altında ürettiğim mobil uygulamalardan ve web araçlarından bazı örnekler.
+          Her proje, gerçek bir ihtiyaca yönelik uçtan uca tasarlandı ve geliştirildi.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Project Card 1: Retro Chatbot -->
+        <article class="reveal card-glow group rounded-2xl bg-slate-900/60 border border-white/5 p-6 hover:border-brand-500/30 hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+            </div>
+            <span class="text-[11px] font-medium rounded-full bg-white/5 text-slate-400 px-2.5 py-1">Web Uygulaması</span>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Retro Chatbot</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Nostaljik arayüz tasarımıyla dikkat çeken, kullanıcılarla akıcı bir şekilde etkileşime giren yapay zeka destekli web tabanlı sohbet asistanı.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">Python</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">Flask</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">JavaScript</span>
+          </div>
+          <a href="https://github.com/onertahir/retrochatbot" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
+            Siteyi Ziyaret Et
+            <svg class="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </a>
+        </article>
+
+        <!-- Project Card 2: Bilkay İnşaat -->
+        <article class="reveal card-glow group rounded-2xl bg-slate-900/60 border border-white/5 p-6 hover:border-brand-500/30 hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+            </div>
+            <span class="text-[11px] font-medium rounded-full bg-white/5 text-slate-400 px-2.5 py-1">Kurumsal Web</span>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Bilkay İnşaat</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Firmanın kurumsal kimliğini yansıtan web projesi. Site içerikleri, çarpıcı sloganlar ve kurucu mesajları özenle kurgulanarak tasarıma entegre edildi.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">HTML/CSS</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">Tailwind CSS</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">İçerik Yönetimi</span>
+          </div>
+          <a href="https://bilkayinsaat.com" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
+            Siteyi Ziyaret Et
+            <svg class="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </article>
+
+        <!-- Project Card 3: Olcay Yapı -->
+        <article class="reveal card-glow group rounded-2xl bg-slate-900/60 border border-white/5 p-6 hover:border-brand-500/30 hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 transition-colors">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            </div>
+            <span class="text-[11px] font-medium rounded-full bg-white/5 text-slate-400 px-2.5 py-1">Kurumsal Web</span>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-white">Olcay Yapı</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            İnşaat ve yapı sektörü için özel olarak hazırlanan, mobil öncelikli ve performans odaklı modern kurumsal web sitesi projesi.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">JavaScript</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">Tailwind CSS</span>
+            <span class="text-[11px] rounded-md bg-white/5 text-slate-300 px-2 py-1">Responsive Tasarım</span>
+          </div>
+          <a href="https://olcayyapi.com.tr" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
+            Siteyi Ziyaret Et
+            <svg class="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="py-20 sm:py-28 border-t border-white/5 bg-gradient-to-b from-transparent via-slate-900/30 to-transparent">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid md:grid-cols-5 gap-12 items-center">
+
+        <div class="md:col-span-2 reveal">
+          <div class="relative mx-auto max-w-xs md:max-w-none">
+            <div class="aspect-square rounded-3xl bg-gradient-to-br from-brand-600/20 to-slate-800/40 border border-white/5 flex items-center justify-center overflow-hidden">
+              <span class="text-6xl sm:text-7xl font-extrabold bg-gradient-to-br from-brand-300 to-indigo-300 bg-clip-text text-transparent">TO</span>
+            </div>
+            <div class="absolute -bottom-4 -right-4 rounded-2xl bg-slate-900 border border-white/10 px-4 py-3 shadow-xl">
+              <p class="text-xs text-slate-400">Şu anda</p>
+              <p class="text-sm font-semibold text-white">Yeni fikirler üzerinde 💡</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 reveal">
+          <span class="text-sm font-semibold text-brand-400 tracking-wide uppercase">Hakkımda</span>
+          <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">Merhaba, ben Tahir 👋</h2>
+          <p class="mt-5 text-slate-400 leading-relaxed">
+            Bilgisayar programcısı olarak yazılım dünyasına adım attığım günden bu yana,
+            fikirleri kullanılabilir ürünlere dönüştürmeyi seviyorum. <span class="text-slate-200 font-medium">TOCode</span>
+            markası altında bağımsız olarak çalışıyor; mobil uygulamalar ve web araçları
+            geliştirerek hem bireysel kullanıcılara hem de küçük işletmelere pratik
+            çözümler sunuyorum.
+          </p>
+          <p class="mt-4 text-slate-400 leading-relaxed">
+            Sadeliğe, performansa ve kullanıcı deneyimine önem veriyorum. Her projede
+            fikir aşamasından tasarıma, geliştirmeden yayına kadar sürecin tamamına
+            hakim olmaya çalışıyorum.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-2.5">
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">Kotlin</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">Flutter</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">JavaScript</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">React</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">Tailwind CSS</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">Firebase</span>
+            <span class="rounded-full bg-white/5 border border-white/10 px-3.5 py-1.5 text-sm text-slate-300">Git &amp; GitHub</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT + FOOTER ================= -->
+  <footer id="contact" class="border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+      <div class="reveal max-w-2xl mx-auto text-center">
+        <span class="text-sm font-semibold text-brand-400 tracking-wide uppercase">İletişim</span>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">Birlikte bir şeyler üretelim</h2>
+        <p class="mt-4 text-slate-400">
+          Bir proje fikriniz mi var, yoksa sadece merhaba mı demek istiyorsunuz?
+          Aşağıdaki kanallardan bana ulaşabilirsiniz.
+        </p>
+      </div>
+
+      <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:tahironer11@gmail.com" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-900/40 hover:bg-brand-500 hover:-translate-y-0.5 active:translate-y-0 transition-all">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          tahironer11@gmail.com
+        </a>
+        <a href="https://github.com/onertahir" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 font-semibold text-slate-200 hover:bg-white/10 hover:-translate-y-0.5 active:translate-y-0 transition-all">
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.15c-3.2.7-3.88-1.38-3.88-1.38-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55 4.56-1.53 7.85-5.85 7.85-10.95C23.5 5.74 18.27.5 12 .5z"/></svg>
+          GitHub'ı Görüntüle
+        </a>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold text-xs">TO</span>
+          <span class="text-sm text-slate-400">© <span id="year"></span> TOCode — Tüm hakları saklıdır.</span>
+        </div>
+        <div class="flex items-center gap-5 text-slate-500">
+          <a href="https://github.com/onertahir" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-white transition-colors">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.15c-3.2.7-3.88-1.38-3.88-1.38-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a10.9 10.9 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55 4.56-1.53 7.85-5.85 7.85-10.95C23.5 5.74 18.27.5 12 .5z"/></svg>
+          </a>
+          <a href="mailto:tahironer11@gmail.com" aria-label="E-posta" class="hover:text-white transition-colors">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </a>
+          <a href="#home" aria-label="Yukarı çık" class="hover:text-white transition-colors">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+
+    function closeMenu() {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', String(isHidden));
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Scroll reveal animation
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view', 'animate-fade-up');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
